@@ -1,6 +1,6 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const specialAssign = require('./specialAssign');
+const React = require("react");
+const PropTypes = require("prop-types");
+const specialAssign = require("./specialAssign");
 
 const checkedProps = {
   children: PropTypes.node.isRequired,
@@ -11,7 +11,7 @@ const checkedProps = {
 
 class AriaMenuButtonMenuItem extends React.Component {
   static propTypes = checkedProps;
-  static defaultProps = { tag: 'div' };
+  static defaultProps = { tag: "div" };
 
   static contextTypes = {
     ambManager: PropTypes.object.isRequired
@@ -25,17 +25,19 @@ class AriaMenuButtonMenuItem extends React.Component {
   }
 
   handleKeyDown = event => {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    if (this.props.tag === 'a' && this.props.href) return;
+    if (event.key !== "Enter" && event.key !== " ") return;
+    if (this.props.tag === "a" && this.props.href) return;
+    if (this.props.tag === "button") return;
     event.preventDefault();
     this.selectItem(event);
   };
 
   selectItem = event => {
     // If there's no value, we'll send the child
-    const value = typeof this.props.value !== 'undefined'
-      ? this.props.value
-      : this.props.children;
+    const value =
+      typeof this.props.value !== "undefined"
+        ? this.props.value
+        : this.props.children;
     this.context.ambManager.handleSelection(value, event);
   };
 
@@ -47,8 +49,8 @@ class AriaMenuButtonMenuItem extends React.Component {
     const menuItemProps = {
       onClick: this.selectItem,
       onKeyDown: this.handleKeyDown,
-      role: 'menuitem',
-      tabIndex: '-1',
+      role: "menuitem",
+      tabIndex: "-1",
       ref: this.registerNode
     };
 
